@@ -1,25 +1,29 @@
 NAME = inception
-COMPOSE = /usr/bin/docker-compose
-PATH = -f srcs/docker-compose.yml
+COMPOSE = docker-compose
+PATH_DOC = -f srcs/docker-compose.yml
 
 all: ${NAME}
 
 ${NAME}: 
-	@/usr/bin/sudo mkdir -p /home/shamizi/data/wordpress
-	@/usr/bin/sudo mkdir -p /home/shamizi/data/mariadb
-	${COMPOSE} ${PATH} up -d --build
+	@sudo mkdir -p /home/shamizi/data/wordpress
+	@sudo mkdir -p /home/shamizi/data/mariadb
+	${COMPOSE} ${PATH_DOC} up -d --build
 
 start:
-	${COMPOSE} ${PATH} start
+	${COMPOSE} ${PATH_DOC} start
 restart:
-	${COMPOSE} ${PATH} restart
+	${COMPOSE} ${PATH_DOC} restart
 
 stop:
-	${COMPOSE} ${PATH} stop
+	${COMPOSE} ${PATH_DOC} stop
+
+logs:
+	${COMPOSE} ${PATH_DOC} logs
 
 clean:
-	${COMPOSE} ${PATH} down
+	${COMPOSE} ${PATH_DOC} down
 
 fclean:
-	${COMPOSE} ${PATH} down --rmi all -v
-	@/usr/bin/bash srcs/fclean.sh
+	${COMPOSE} ${PATH_DOC} down --rmi all -v
+	sudo rm -rf /home/shamizi/data
+# sudo docker volume rm $(docker volume ls -q)
